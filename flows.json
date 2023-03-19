@@ -1,0 +1,236 @@
+[
+    {
+        "id": "9ccd6f73e867fa4a",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "220a2c08fb71c1a9",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "ea097de0dff20c5d7cb017c3a1fa1aa83e864c0e62bcf9f1c6a45bdd63278339-certificate.pem.crt",
+        "keyname": "ea097de0dff20c5d7cb017c3a1fa1aa83e864c0e62bcf9f1c6a45bdd63278339-private.pem.key",
+        "caname": "AmazonRootCA1 (2).pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "8831c0fb5cccb091",
+        "type": "mqtt-broker",
+        "name": "aws_iot",
+        "broker": "a26lhtb7ampyu-ats.iot.us-east-1.amazonaws.com",
+        "port": "8883",
+        "tls": "220a2c08fb71c1a9",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "9e738f36e63ab9e8",
+        "type": "rpi-sensehatsim in",
+        "z": "9ccd6f73e867fa4a",
+        "name": "",
+        "motion": false,
+        "env": true,
+        "stick": true,
+        "x": 500,
+        "y": 240,
+        "wires": [
+            [
+                "471e25cc67748c86",
+                "7b24cb1176e7cab9",
+                "c06a255dd66a3224",
+                "3fb943fcc8288368"
+            ]
+        ]
+    },
+    {
+        "id": "a354f8f7f974d637",
+        "type": "debug",
+        "z": "9ccd6f73e867fa4a",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "471e25cc67748c86",
+        "type": "function",
+        "z": "9ccd6f73e867fa4a",
+        "name": "Temperature",
+        "func": "msg.payload = {\n    Temperature: (Math.floor(Math.random() * 1000) / 10).toFixed(1)\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 180,
+        "wires": [
+            [
+                "71cbe0f0a5f31b87"
+            ]
+        ]
+    },
+    {
+        "id": "7b24cb1176e7cab9",
+        "type": "function",
+        "z": "9ccd6f73e867fa4a",
+        "name": "Pressure",
+        "func": "msg.payload = {\n    Pressure: Math.floor(Math.random() * (1400 - 800) + 800)\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 280,
+        "wires": [
+            [
+                "71cbe0f0a5f31b87"
+            ]
+        ]
+    },
+    {
+        "id": "c06a255dd66a3224",
+        "type": "function",
+        "z": "9ccd6f73e867fa4a",
+        "name": "Humidity",
+        "func": "msg.payload = {\n    Humidity: Math.floor(Math.random() * 100) + \"%\"\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 340,
+        "wires": [
+            [
+                "71cbe0f0a5f31b87"
+            ]
+        ]
+    },
+    {
+        "id": "71cbe0f0a5f31b87",
+        "type": "join",
+        "z": "9ccd6f73e867fa4a",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "payload",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1010,
+        "y": 220,
+        "wires": [
+            [
+                "554eeb2ffc34b4e3"
+            ]
+        ]
+    },
+    {
+        "id": "3fb943fcc8288368",
+        "type": "function",
+        "z": "9ccd6f73e867fa4a",
+        "name": "Coordinates",
+        "func": "msg.payload = {\n    Longitude: (Math.random() * 360 - 180).toFixed(2),\n    Latitude: (Math.random() * 180 - 90).toFixed(2)\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 400,
+        "wires": [
+            [
+                "71cbe0f0a5f31b87"
+            ]
+        ]
+    },
+    {
+        "id": "4d4fd06544645ea9",
+        "type": "mqtt out",
+        "z": "9ccd6f73e867fa4a",
+        "name": "",
+        "topic": "senseHat-Sim",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "8831c0fb5cccb091",
+        "x": 1400,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "554eeb2ffc34b4e3",
+        "type": "delay",
+        "z": "9ccd6f73e867fa4a",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1220,
+        "y": 220,
+        "wires": [
+            [
+                "a354f8f7f974d637",
+                "4d4fd06544645ea9"
+            ]
+        ]
+    }
+]
