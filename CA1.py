@@ -14,15 +14,15 @@ import time
 # Connecting to AWS (specifically DynamoDB)
 client = boto3.client(
     'dynamodb',
-    aws_access_key_id='='#################'',
+    aws_access_key_id='#################',
     aws_secret_access_key='#################'
     )
 
 
 db = boto3.resource(
     'dynamodb',
-    aws_access_key_id='='#################'',
-    aws_secret_access_key='='#################''
+    aws_access_key_id='#################',
+    aws_secret_access_key='#################'
      )
     
 table = db.Table('senseHat_table')
